@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
                 Log.e("Success Response = ", response);
                 try{
                     JSONObject jsonObj = (JSONObject) new JSONTokener(response).nextValue();
-
                     mAccessToken = jsonObj.getString("access_token");
                     Log.i(Constants.TAG, "Got access token: " + mAccessToken);
                     mUserSuccess = true;
