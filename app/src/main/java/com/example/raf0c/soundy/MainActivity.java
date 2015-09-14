@@ -42,19 +42,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         setContentView(R.layout.activity_main);
 
         mCallbackUrl = Constants.URL_REDIRECT;
-//        mAuthUrl = Constants.TOKEN_URL +
-//                "?client_id=" + Constants.CLIENT_ID +
-//                "?client_secret=" + Constants.CLIENT_SECRET +
-//                "?grant_type=authorization_code" +
-//                "?redirect_uri=" + Constants.URL_REDIRECT ;
+
         mAuthUrl = Constants.END_USER_AUTH +
                 "?client_id=" + Constants.CLIENT_ID +
-                "?redirect_uri=" + Constants.URL_REDIRECT +
-                "?response_type=code" +
-                "?scope='*'?display=popup";
+                "&redirect_uri=" + Constants.URL_REDIRECT +
+                "&response_type=code" +
+                "&display=popup";
 
         Uri.encode(mAuthUrl);
-        // https://api.soundcloud.com/oauth2/token?client_id=e6ca2671f0795ff30d3645dcd8acadf9?redirect_uri=https://github.com/raf0c?response_type=code?scope='*'?display=popup
 
         Log.i(Constants.TAG,mAuthUrl);
         OAuthDialogListener listener = new OAuthDialogListener() {
@@ -83,9 +78,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
     public void onClick(View v) {
         dialogAuthSC.show();
     }
-
+//https://api.soundcloud.com/oauth2/token?client_id=e6ca2671f0795ff30d3645dcd8acadf9&client_secret=b1f9a2fc243e2d21d82d6db72259d0d6&grant_type=authorization_code&redirect_uri=https://github.com/raf0c&code=703a6a5a79908f95e04be9b6980bd7de#
     public void requestAccessToken(final String code) {
-        StringRequest request = new StringRequest(Request.Method.POST, Constants.TOKEN_URL, new Response.Listener<String>() {
+        String mAuthTokenURL =
+                Constants.TOKEN_URL +
+                        "?client_id=" + Constants.CLIENT_ID +
+                        "&client_secret="+Constants.CLIENT_SECRET +
+                        "&grant_type=authorization_code"+
+                        "&redirect_uri="+Constants.URL_REDIRECT +
+                        "&code="+code;
+
+        StringRequest request = new StringRequest(Request.Method.POST, mAuthTokenURL, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
