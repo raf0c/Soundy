@@ -1,6 +1,5 @@
 package com.example.raf0c.soundy;
 
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 
     private Button mBtn_connect;
     private DialogAuthSC dialogAuthSC;
-    private String mAuthUrl;
     private OAuthAuthenticationListener mListener;
     private String mAccessToken;
     private String mCallbackUrl;
@@ -56,15 +54,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 
         mCallbackUrl = Constants.URL_REDIRECT;
 
-        mAuthUrl = Constants.END_USER_AUTH +
-                "?client_id=" + Constants.CLIENT_ID +
-                "&redirect_uri=" + Constants.URL_REDIRECT +
-                "&response_type=code" +
-                "&display=popup";
-
-        Uri.encode(mAuthUrl);
-
-        Log.i(Constants.TAG,mAuthUrl);
+        Log.i(Constants.TAG,Constants.mAuthUrl);
         OAuthDialogListener listener = new OAuthDialogListener() {
             @Override
             public void onComplete(String code) {
@@ -77,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
                 Log.e("ERROR", error);
             }
         };
-        dialogAuthSC = new DialogAuthSC(this, mAuthUrl,listener);
+        dialogAuthSC = new DialogAuthSC(this, Constants.mAuthUrl,listener);
 
         initElements();
     }

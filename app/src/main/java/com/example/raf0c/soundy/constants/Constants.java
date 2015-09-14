@@ -12,4 +12,9 @@ public class Constants {
     public static final String URL_REDIRECT = "https://github.com/raf0c";
     public static final String TAG = "SoundCloudAPI";
     public static final String URL_ME="https://api.soundcloud.com/me?oauth_token=";
+    public static final String mAuthUrl = Constants.END_USER_AUTH +
+            "?client_id=" + Constants.CLIENT_ID +
+            "&redirect_uri=" + Constants.URL_REDIRECT +
+            "&response_type=code" +
+            "&display=popup";
 }
