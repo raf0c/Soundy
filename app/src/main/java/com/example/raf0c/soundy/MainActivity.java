@@ -167,7 +167,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 
     private void setInfoUser(String user, String fullname,String country, String profpic){
 
-
+        if(mUserSuccess){
+            mBtn_connect.setVisibility(View.GONE);
+        }
+        else{
+            mBtn_connect.setVisibility(View.GONE);
+        }
         mTvname.setText(user);
         mTvfull_name.setText(fullname);
         mTvCountry.setText(country);
