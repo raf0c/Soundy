@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mCallbackUrl = Constants.URL_REDIRECT;
-
         Log.i(Constants.TAG,Constants.mAuthUrl);
         OAuthDialogListener listener = new OAuthDialogListener() {
             @Override
