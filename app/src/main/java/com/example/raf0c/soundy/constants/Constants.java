@@ -12,5 +12,4 @@ public class Constants {
     public static final String URL_REDIRECT = "https://github.com/raf0c";
     public static final String TAG = "SoundCloudAPI";
 
-   // https://api.soundcloud.com/oauth2/token?client_id=e6ca2671f0795ff30d3645dcd8acadf9?redirect_uri=https://github.com/raf0c?response_type=code?scope='*'?display=popup
 }
