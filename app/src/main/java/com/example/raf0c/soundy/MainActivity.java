@@ -9,17 +9,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.example.raf0c.soundy.constants.Constants;
 import com.example.raf0c.soundy.controller.ApplicationController;
 import com.example.raf0c.soundy.interfaces.OAuthAuthenticationListener;
 import com.example.raf0c.soundy.interfaces.OAuthDialogListener;
+import com.example.raf0c.soundy.utils.BitmapLruCache;
 import com.example.raf0c.soundy.views.DialogAuthSC;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -35,6 +42,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
     private String mAccessToken;
     private String mCallbackUrl;
     private Boolean mUserSuccess = false;
+
+    private TextView mTvname;
+    private TextView mTvfull_name;
+    private TextView mTvCountry;
+    private NetworkImageView profile_pic;
+    private ImageLoader mImageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +85,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
     private void initElements(){
             mBtn_connect = (Button) findViewById(R.id.btn_connectSC);
             mBtn_connect.setOnClickListener(this);
+            mTvname = (TextView) findViewById(R.id.sc_username);
+            mTvfull_name = (TextView) findViewById(R.id.sc_fullname);
+            mTvCountry = (TextView) findViewById(R.id.sc_country);
+            profile_pic = (NetworkImageView) findViewById(R.id.profile_pic);
+            mImageLoader = new ImageLoader(ApplicationController.getInstance().getRequestQueue(), new BitmapLruCache());
+
     }
 
     @Override
     public void onClick(View v) {
         dialogAuthSC.show();
     }
-//https://api.soundcloud.com/oauth2/token?client_id=e6ca2671f0795ff30d3645dcd8acadf9&client_secret=b1f9a2fc243e2d21d82d6db72259d0d6&grant_type=authorization_code&redirect_uri=https://github.com/raf0c&code=703a6a5a79908f95e04be9b6980bd7de#
     public void requestAccessToken(final String code) {
         String mAuthTokenURL =
                 Constants.TOKEN_URL +
@@ -98,9 +116,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 
                     mAccessToken = jsonObj.getString("access_token");
                     Log.i(Constants.TAG, "Got access token: " + mAccessToken);
-
                     mUserSuccess = true;
-                    //setInfo(user,name,profpic);
+                    fetchUserInfo(Constants.URL_ME, mAccessToken);
                 }catch(Exception e){
                     e.printStackTrace();
                     mUserSuccess = false;
@@ -117,7 +134,48 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         ApplicationController.getInstance().getRequestQueue().add(request);
     }
 
+    private void fetchUserInfo(String url, String token) {
 
+        JsonObjectRequest request = new JsonObjectRequest(url+token, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+
+                            Log.e(Constants.TAG,jsonObject.toString());
+                            String username   = jsonObject.getString("username");
+                            String fullname = jsonObject.getString("full_name");
+                            String country = jsonObject.getString("country");
+                            String profpic = jsonObject.getString("avatar_url");
+
+                            setInfoUser(username,fullname,country,profpic);
+                        }
+                        catch(JSONException e) {
+                            Toast.makeText(getApplicationContext(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                        Toast.makeText(getApplicationContext(), "Unable to fetch data: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        ApplicationController.getInstance().getRequestQueue().add(request);
+    }
+
+    private void setInfoUser(String user, String fullname,String country, String profpic){
+
+
+        mTvname.setText(user);
+        mTvfull_name.setText(fullname);
+        mTvCountry.setText(country);
+        profile_pic.setImageUrl(profpic, mImageLoader);
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
