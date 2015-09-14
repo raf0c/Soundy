@@ -17,4 +17,10 @@ public class Constants {
             "&redirect_uri=" + Constants.URL_REDIRECT +
             "&response_type=code" +
             "&display=popup";
+    public static final String mAuthTokenURL = Constants.TOKEN_URL +
+            "?client_id=" + Constants.CLIENT_ID +
+            "&client_secret="+Constants.CLIENT_SECRET +
+            "&grant_type=authorization_code"+
+            "&redirect_uri="+Constants.URL_REDIRECT +
+            "&code=";
 }

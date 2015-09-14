@@ -88,13 +88,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         dialogAuthSC.show();
     }
     public void requestAccessToken(final String code) {
-        String mAuthTokenURL =
-                Constants.TOKEN_URL +
-                        "?client_id=" + Constants.CLIENT_ID +
-                        "&client_secret="+Constants.CLIENT_SECRET +
-                        "&grant_type=authorization_code"+
-                        "&redirect_uri="+Constants.URL_REDIRECT +
-                        "&code="+code;
+
+        String mAuthTokenURL = Constants.mAuthTokenURL+code;
 
         StringRequest request = new StringRequest(Request.Method.POST, mAuthTokenURL, new Response.Listener<String>() {
 
