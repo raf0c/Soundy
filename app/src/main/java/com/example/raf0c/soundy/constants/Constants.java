@@ -11,5 +11,5 @@ public class Constants {
     public static final String TOKEN_URL = "https://api.soundcloud.com/oauth2/token";
     public static final String URL_REDIRECT = "https://github.com/raf0c";
     public static final String TAG = "SoundCloudAPI";
-
+    public static final String URL_ME="https://api.soundcloud.com/me?oauth_token=";
 }
