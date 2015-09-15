@@ -24,3 +24,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.mcxiaoke.volley:library:1.0.19'
 }
+
+dependencies{
+    androidTestCompile fileTree(dir: 'libs', include: ['robotium-solo-5.3.2-SNAPSHOT.jar'])
+}
