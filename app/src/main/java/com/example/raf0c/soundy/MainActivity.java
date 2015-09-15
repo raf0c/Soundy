@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.example.raf0c.soundy.fragments.MainFragment;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
 
