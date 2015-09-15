@@ -1,5 +1,6 @@
 package com.example.raf0c.soundy.views;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -78,6 +79,7 @@ public class DialogAuthSC extends Dialog {
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setUpWebView() {
         mWebView = new WebView(getContext());
         mWebView.setVerticalScrollBarEnabled(false);
