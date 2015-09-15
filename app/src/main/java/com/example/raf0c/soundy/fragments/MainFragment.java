@@ -1,6 +1,5 @@
 package com.example.raf0c.soundy.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +19,6 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
-import com.example.raf0c.soundy.MainActivity;
 import com.example.raf0c.soundy.R;
 import com.example.raf0c.soundy.constants.Constants;
 import com.example.raf0c.soundy.controller.ApplicationController;
@@ -33,7 +31,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.util.ArrayList;
 
 /**
  * Created by raf0c on 14/09/15.

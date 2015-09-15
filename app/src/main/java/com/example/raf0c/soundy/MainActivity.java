@@ -3,36 +3,9 @@ package com.example.raf0c.soundy;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.StringRequest;
-import com.example.raf0c.soundy.constants.Constants;
-import com.example.raf0c.soundy.controller.ApplicationController;
 import com.example.raf0c.soundy.fragments.MainFragment;
-import com.example.raf0c.soundy.interfaces.OAuthAuthenticationListener;
-import com.example.raf0c.soundy.interfaces.OAuthDialogListener;
-import com.example.raf0c.soundy.utils.BitmapLruCache;
-import com.example.raf0c.soundy.views.DialogAuthSC;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
