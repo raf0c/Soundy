@@ -36,10 +36,7 @@ import java.util.List;
 public class FollowersFragment extends Fragment {
 
     private static Context mContext;
-    private LinearLayout myLayout;
-    private ImageLoader mImageLoader;
     private ImageItemAdapter mAdapter;
-    private String mUserID;
     private String mAccessToken;
 
     public FollowersFragment(){
@@ -58,7 +55,7 @@ public class FollowersFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = this.getArguments();
-        mUserID = bundle.getString("userid");
+        String mUserID = bundle.getString("userid");
         mAccessToken = bundle.getString("token");
     }
 
@@ -66,11 +63,8 @@ public class FollowersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        myLayout = (LinearLayout) inflater.inflate(R.layout.fragment_followers, container, false);
-        mImageLoader = new ImageLoader(ApplicationController.getInstance().getRequestQueue(), new BitmapLruCache());
+        LinearLayout myLayout = (LinearLayout) inflater.inflate(R.layout.fragment_followers, container, false);
         mAdapter = new ImageItemAdapter(getActivity());
-
-
         ListView listView = (ListView) myLayout.findViewById(R.id.list_followers);
         listView.setAdapter(mAdapter);
 

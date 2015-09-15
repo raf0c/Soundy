@@ -10,18 +10,16 @@ import com.example.raf0c.soundy.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Fragment mMainFragment;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
-        mMainFragment = MainFragment.newInstance(this);
+        Fragment mMainFragment = MainFragment.newInstance(this);
         getSupportFragmentManager().beginTransaction().add(R.id.container, mMainFragment).commit();
 
     }
