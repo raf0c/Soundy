@@ -27,8 +27,6 @@ import com.example.raf0c.soundy.interfaces.OAuthDialogListener;
  */
 public class DialogAuthSC extends Dialog {
 
-    static final float[] DIMENSIONS_LANDSCAPE = { 460, 260 };
-    static final float[] DIMENSIONS_PORTRAIT = { 280, 420 };
     static final FrameLayout.LayoutParams FILL = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     static final int MARGIN = 4;
     static final int PADDING = 2;
@@ -59,6 +57,8 @@ public class DialogAuthSC extends Dialog {
         setUpWebView();
         Display display = getWindow().getWindowManager().getDefaultDisplay();
         final float scale = getContext().getResources().getDisplayMetrics().density;
+        float[] DIMENSIONS_LANDSCAPE = { display.getWidth() / 2, display.getWidth() / 3 };
+        float[] DIMENSIONS_PORTRAIT = { display.getWidth() / 3, display.getWidth() / 2 };
         float[] dimensions = (display.getWidth() < display.getHeight()) ? DIMENSIONS_PORTRAIT : DIMENSIONS_LANDSCAPE;
         addContentView(mContent, new FrameLayout.LayoutParams( (int) (dimensions[0] * scale + 0.5f), (int) (dimensions[1] * scale + 0.5f)));
         CookieSyncManager.createInstance(getContext());
