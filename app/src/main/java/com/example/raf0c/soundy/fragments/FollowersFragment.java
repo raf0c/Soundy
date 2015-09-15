@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +13,12 @@ import android.widget.ListView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.raf0c.soundy.R;
 import com.example.raf0c.soundy.adapters.ImageItemAdapter;
 import com.example.raf0c.soundy.constants.Constants;
 import com.example.raf0c.soundy.controller.ApplicationController;
 import com.example.raf0c.soundy.model.ImageItem;
-import com.example.raf0c.soundy.utils.BitmapLruCache;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,10 +36,7 @@ public class FollowersFragment extends Fragment {
     private ImageItemAdapter mAdapter;
     private String mAccessToken;
 
-    public FollowersFragment(){
-
-    }
-
+    public FollowersFragment(){}
 
     public static Fragment newInstance(Context context) {
         FollowersFragment f = new FollowersFragment();
@@ -75,7 +69,6 @@ public class FollowersFragment extends Fragment {
 
 
     private void fetch(String url) {
-        Log.e("URL ES!! : ", url);
         JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray> () {
             @Override
             public void onResponse(JSONArray response) {
@@ -94,7 +87,6 @@ public class FollowersFragment extends Fragment {
             }
         });
 
-
         ApplicationController.getInstance().getRequestQueue().add(request);
     }
 
@@ -107,9 +99,9 @@ public class FollowersFragment extends Fragment {
             JSONObject data_obj = jsonArray.getJSONObject(i);
 
             String name = data_obj.getString("username");
-            String urlpicture =  data_obj.getString("avatar_url");
+            String url_picture =  data_obj.getString("avatar_url");
 
-            ImageItem row = new ImageItem(urlpicture, name);
+            ImageItem row = new ImageItem(url_picture, name);
             records.add(row);
         }
 
