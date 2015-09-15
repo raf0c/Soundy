@@ -37,20 +37,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
     private Button mBtn_connect;
     private DialogAuthSC dialogAuthSC;
     private OAuthAuthenticationListener mListener;
-    private String mAccessToken;
-    private String mCallbackUrl;
-    private Boolean mUserSuccess = false;
-
     private TextView mTvname;
     private TextView mTvfull_name;
     private TextView mTvCountry;
     private NetworkImageView profile_pic;
     private ImageLoader mImageLoader;
+    private String mAccessToken;
+    public Boolean mUserSuccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         Log.i(Constants.TAG,Constants.mAuthUrl);
         OAuthDialogListener listener = new OAuthDialogListener() {
@@ -85,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
     public void onClick(View v) {
         dialogAuthSC.show();
     }
+
     public void requestAccessToken(final String code) {
 
         String mAuthTokenURL = Constants.mAuthTokenURL+code;
@@ -130,10 +130,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
                             String country = jsonObject.getString("country");
                             String profpic = jsonObject.getString("avatar_url");
 
-                            setInfoUser(username,fullname,country,profpic);
+                            setInfoUser(username, fullname, country, profpic);
                         }
                         catch(JSONException e) {
-                            Toast.makeText(getApplicationContext(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -141,14 +141,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
 
-                        Toast.makeText(getApplicationContext(), "Unable to fetch data: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Unable to fetch data: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
         ApplicationController.getInstance().getRequestQueue().add(request);
     }
 
-    private void setInfoUser(String user, String fullname,String country, String profpic){
+
+    public void setInfoUser(String user, String fullname,String country, String profpic){
 
         if(mUserSuccess){
             mBtn_connect.setVisibility(View.GONE);
