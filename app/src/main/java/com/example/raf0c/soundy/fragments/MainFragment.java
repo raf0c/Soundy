@@ -49,6 +49,9 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     private String mAccessToken;
     public Boolean mUserSuccess;
     private static Context mContext;
+    private String mUserID;
+    private Fragment followersFragment;
+
 
     public MainFragment(){
 
@@ -88,6 +91,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
 
     private void initElements(){
+        followersFragment = FollowersFragment.newInstance(mContext);
         mBtn_connect = (Button) myLayout.findViewById(R.id.btn_connectSC);
         mBtn_connect.setOnClickListener(this);
         mTvname = (TextView) myLayout.findViewById(R.id.sc_username);
@@ -116,6 +120,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                     JSONObject jsonObj = (JSONObject) new JSONTokener(response).nextValue();
                     mAccessToken = jsonObj.getString("access_token");
                     Log.i(Constants.TAG, "Got access token: " + mAccessToken);
+                    setmAccessToken(mAccessToken);
                     mUserSuccess = true;
                     fetchUserInfo(Constants.URL_ME, mAccessToken);
                 }catch(Exception e){
@@ -134,6 +139,19 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         ApplicationController.getInstance().getRequestQueue().add(request);
     }
 
+    public String getmUserID(){
+        return mUserID;
+    }
+    private void setmUserID(String userID){
+        mUserID = userID;
+    }
+
+    public String getmAccessToken(){
+        return mAccessToken;
+    }
+    private void setmAccessToken(String token){
+        mAccessToken = token;
+    }
     private void fetchUserInfo(String url, String token) {
 
         JsonObjectRequest request = new JsonObjectRequest(url+token, null,
@@ -147,7 +165,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                             String fullname = jsonObject.getString("full_name");
                             String country = jsonObject.getString("country");
                             String profpic = jsonObject.getString("avatar_url");
-
+                            setmUserID(jsonObject.getString("id"));
                             setInfoUser(username, fullname, country, profpic);
                         }
                         catch(JSONException e) {
@@ -166,6 +184,12 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         ApplicationController.getInstance().getRequestQueue().add(request);
     }
 
+    public void saveData(String userID,String token) {
+        Bundle bundle = new Bundle();
+        bundle.putString("userid", userID);
+        bundle.putString("token", token);
+        followersFragment.setArguments(bundle);
+    }
 
     public void setInfoUser(String user, String fullname,String country, String profpic){
 
@@ -179,6 +203,9 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mTvfull_name.setText(fullname);
         mTvCountry.setText(country);
         profile_pic.setImageUrl(profpic, mImageLoader);
+
+        saveData(mUserID,mAccessToken);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.followers_container, followersFragment).commit();
 
 
     }
