@@ -98,8 +98,8 @@ public class FollowersFragment extends Fragment {
 
             JSONObject data_obj = jsonArray.getJSONObject(i);
 
-            String name = data_obj.getString("username");
-            String url_picture =  data_obj.getString("avatar_url");
+            String name = data_obj.getString(Constants.TAG_USERNAME);
+            String url_picture =  data_obj.getString(Constants.TAG_AVATARURL);
 
             ImageItem row = new ImageItem(url_picture, name);
             records.add(row);

@@ -161,11 +161,11 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                         try {
 
                             Log.e(Constants.TAG,jsonObject.toString());
-                            String username   = jsonObject.getString("username");
-                            String fullname = jsonObject.getString("full_name");
-                            String country = jsonObject.getString("country");
-                            String profpic = jsonObject.getString("avatar_url");
-                            setmUserID(jsonObject.getString("id"));
+                            String username   = jsonObject.getString(Constants.TAG_USERNAME);
+                            String fullname = jsonObject.getString(Constants.TAG_FULLNAME);
+                            String country = jsonObject.getString(Constants.TAG_COUNTRY);
+                            String profpic = jsonObject.getString(Constants.TAG_AVATARURL);
+                            setmUserID(jsonObject.getString(Constants.TAG_ID));
                             setInfoUser(username, fullname, country, profpic);
                         }
                         catch(JSONException e) {

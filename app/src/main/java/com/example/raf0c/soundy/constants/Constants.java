@@ -12,12 +12,21 @@ public class Constants {
     public static final String URL_REDIRECT = "https://github.com/raf0c";
     public static final String TAG = "SoundCloudAPI";
     public static final String URL_ME="https://api.soundcloud.com/me?oauth_token=";
+
     public static final String mAuthUrl = Constants.END_USER_AUTH + "?client_id=" + Constants.CLIENT_ID + "&redirect_uri="
                                           + Constants.URL_REDIRECT + "&response_type=code" + "&display=popup";
+
     public static final String mAuthTokenURL = Constants.TOKEN_URL + "?client_id=" + Constants.CLIENT_ID +
                                                 "&client_secret="+Constants.CLIENT_SECRET + "&grant_type=authorization_code"+
                                                 "&redirect_uri="+Constants.URL_REDIRECT + "&code=";
-    ////https://api.soundcloud.com/me/33958339/followers?oauth_token=1-149663-33958339-cce6cccee44c8c
+
     public static final String API_URL_ME ="https://api.soundcloud.com/me";
     public static final String TAG_FOLLOWERS ="/followers";
+
+    public static final String TAG_USERNAME ="username";
+    public static final String TAG_FULLNAME = "full_name";
+    public static final String TAG_COUNTRY ="country";
+    public static final String TAG_AVATARURL = "avatar_url";
+    public static final String TAG_ID = "id";
+
 }
