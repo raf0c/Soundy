@@ -152,6 +152,8 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     private void setmAccessToken(String token){
         mAccessToken = token;
     }
+
+
     private void fetchUserInfo(String url, String token) {
 
         JsonObjectRequest request = new JsonObjectRequest(url+token, null,
