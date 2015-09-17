@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -37,7 +36,6 @@ public class FollowersFragment extends Fragment {
     private static Context mContext;
     private ImageItemAdapter mAdapter;
     private String mAccessToken;
-    private ArrayList<ImageItem> records;
     private RecyclerView rv;
     private List<ImageItem> imageRecords;
 
@@ -54,7 +52,6 @@ public class FollowersFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = this.getArguments();
-        String mUserID = bundle.getString(Constants.KEY_ID);
         mAccessToken = bundle.getString(Constants.KEY_TOKEN);
 
 

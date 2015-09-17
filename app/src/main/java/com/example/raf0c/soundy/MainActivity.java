@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.raf0c.soundy.constants.Constants;
 import com.example.raf0c.soundy.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Fragment mMainFragment;
+    private MainFragment mainf = new MainFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,13 +22,42 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        mMainFragment = MainFragment.newInstance(this);
 
-        Fragment mMainFragment = MainFragment.newInstance(this);
-        getSupportFragmentManager().beginTransaction().add(R.id.container, mMainFragment).commit();
+        if(savedInstanceState!=null){
+            mMainFragment = getSupportFragmentManager().getFragment(savedInstanceState,"mCurrentFragment");
+
+        }else{
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, mMainFragment).commit();
+        }
+
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        state.putString(Constants.KEY_USERNAME, mainf.getUsername());
+        state.putString(Constants.KEY_FULL_NAME, mainf.getFullname());
+        state.putString(Constants.KEY_COUNTRY, mainf.getCountry());
+        state.putString(Constants.KEY_PROFPIC, mainf.getProfpic());
+        getSupportFragmentManager().putFragment(state, "mCurrentFragment", mMainFragment);
+    }
 
+    @Override
+    public void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+        if (state != null) {
+            String username   = state.getString(Constants.KEY_USERNAME);
+            String fullname = state.getString(Constants.KEY_FULL_NAME);
+            String country = state.getString(Constants.KEY_COUNTRY);
+            String profpic = state.getString(Constants.KEY_PROFPIC);
+//            mTvname.setText(username);
+//            mTvfull_name.setText(fullname);
+//            mTvCountry.setText(country);
+//            profile_pic.setImageUrl(profpic, mImageLoader);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

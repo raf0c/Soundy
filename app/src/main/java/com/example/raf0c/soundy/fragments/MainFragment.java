@@ -41,17 +41,20 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     private Button mBtn_connect;
     private DialogAuthSC dialogAuthSC;
     private OAuthAuthenticationListener mListener;
-    private TextView mTvname;
-    private TextView mTvfull_name;
-    private TextView mTvCountry;
-    private NetworkImageView profile_pic;
-    private ImageLoader mImageLoader;
+    public TextView mTvname;
+    public TextView mTvfull_name;
+    public TextView mTvCountry;
+    public NetworkImageView profile_pic;
+    public ImageLoader mImageLoader;
     private String mAccessToken;
     public Boolean mUserSuccess;
     private static Context mContext;
     private String mUserID;
     private Fragment followersFragment;
-
+    private String username;
+    private String fullname;
+    private String country;
+    private String profpic;
 
     public MainFragment(){
 
@@ -84,9 +87,86 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         };
         dialogAuthSC = new DialogAuthSC(mContext, Constants.mAuthUrl,listener);
         mImageLoader = new ImageLoader(ApplicationController.getInstance().getRequestQueue(), new BitmapLruCache());
+        if(savedInstanceState!=null){
+            setUsername(savedInstanceState.getString(Constants.KEY_USERNAME));
+            setFullname(savedInstanceState.getString(Constants.KEY_FULL_NAME));
+            setCountry(savedInstanceState.getString(Constants.KEY_COUNTRY));
+            setProfpic(savedInstanceState.getString(Constants.KEY_PROFPIC));
 
+            mTvname.setText(getUsername());
+            mTvfull_name.setText(getFullname());
+            mTvCountry.setText(getCountry());
+            profile_pic.setImageUrl(getProfpic(), mImageLoader);
+            mUserSuccess = savedInstanceState.getBoolean(Constants.KEY_SUCCESS);
+
+        }
 
         return myLayout;
+    }
+
+    public String getUsername() {return username;}
+
+    private void setUsername(String username) {this.username = username;}
+
+    public String getFullname() {return fullname;}
+
+    private void setFullname(String fullname) {this.fullname = fullname;}
+
+    public String getCountry() {return country;}
+
+    private void setCountry(String country) {this.country = country;}
+
+    public String getProfpic() {return profpic;}
+
+    private void setProfpic(String profpic) {this.profpic = profpic;}
+
+    @Override
+    public void onViewStateRestored (Bundle savedInstanceState){
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+
+            setUsername(savedInstanceState.getString(Constants.KEY_USERNAME));
+            setFullname(savedInstanceState.getString(Constants.KEY_FULL_NAME));
+            setCountry(savedInstanceState.getString(Constants.KEY_COUNTRY));
+            setProfpic(savedInstanceState.getString(Constants.KEY_PROFPIC));
+
+            mTvname.setText(getUsername());
+            mTvfull_name.setText(getFullname());
+            mTvCountry.setText(getCountry());
+            profile_pic.setImageUrl(getProfpic(), mImageLoader);
+            mUserSuccess = savedInstanceState.getBoolean(Constants.KEY_SUCCESS);
+
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+
+        if (savedInstanceState != null) {
+            setUsername(savedInstanceState.getString(Constants.KEY_USERNAME));
+            setFullname(savedInstanceState.getString(Constants.KEY_FULL_NAME));
+            setCountry(savedInstanceState.getString(Constants.KEY_COUNTRY));
+            setProfpic(savedInstanceState.getString(Constants.KEY_PROFPIC));
+
+            mTvname.setText(getUsername());
+            mTvfull_name.setText(getFullname());
+            mTvCountry.setText(getCountry());
+            profile_pic.setImageUrl(getProfpic(), mImageLoader);
+            mUserSuccess = savedInstanceState.getBoolean(Constants.KEY_SUCCESS);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(Constants.KEY_USERNAME, username);
+        outState.putString(Constants.KEY_FULL_NAME, fullname);
+        outState.putString(Constants.KEY_COUNTRY, country);
+        outState.putString(Constants.KEY_PROFPIC, profpic);
+        outState.putBoolean(Constants.KEY_SUCCESS, mUserSuccess);
+
     }
 
 
@@ -163,10 +243,10 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                         try {
 
                             Log.e(Constants.TAG,jsonObject.toString());
-                            String username   = jsonObject.getString(Constants.TAG_USERNAME);
-                            String fullname = jsonObject.getString(Constants.TAG_FULLNAME);
-                            String country = jsonObject.getString(Constants.TAG_COUNTRY);
-                            String profpic = jsonObject.getString(Constants.TAG_AVATARURL);
+                             username   = jsonObject.getString(Constants.TAG_USERNAME);
+                             fullname = jsonObject.getString(Constants.TAG_FULLNAME);
+                             country = jsonObject.getString(Constants.TAG_COUNTRY);
+                             profpic = jsonObject.getString(Constants.TAG_AVATARURL);
                             setmUserID(jsonObject.getString(Constants.TAG_ID));
                             setInfoUser(username, fullname, country, profpic);
                         }
@@ -207,7 +287,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         profile_pic.setImageUrl(profpic, mImageLoader);
 
         saveData();
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.followers_container, followersFragment).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.followers_container, followersFragment).commit();
 
 
     }

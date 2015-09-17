@@ -30,4 +30,9 @@ public class Constants {
     public static final String TAG_ID = "id";
     public static final String KEY_ID = "userid";
     public static final String KEY_TOKEN ="token";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_FULL_NAME = "fullname";
+    public static final String KEY_COUNTRY = "country";
+    public static final String KEY_PROFPIC = "profipic";
+    public static final String KEY_SUCCESS ="user_success";
 }
