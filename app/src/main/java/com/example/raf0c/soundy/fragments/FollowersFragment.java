@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,9 @@ public class FollowersFragment extends Fragment {
     private static Context mContext;
     private ImageItemAdapter mAdapter;
     private String mAccessToken;
+    private ArrayList<ImageItem> records;
+    private RecyclerView rv;
+    private List<ImageItem> imageRecords;
 
     public FollowersFragment(){}
 
@@ -49,8 +54,10 @@ public class FollowersFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = this.getArguments();
-        String mUserID = bundle.getString("userid");
-        mAccessToken = bundle.getString("token");
+        String mUserID = bundle.getString(Constants.KEY_ID);
+        mAccessToken = bundle.getString(Constants.KEY_TOKEN);
+
+
     }
 
 
@@ -58,11 +65,16 @@ public class FollowersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         LinearLayout myLayout = (LinearLayout) inflater.inflate(R.layout.fragment_followers, container, false);
-        mAdapter = new ImageItemAdapter(getActivity());
-        ListView listView = (ListView) myLayout.findViewById(R.id.list_followers);
-        listView.setAdapter(mAdapter);
+        rv=(RecyclerView) myLayout.findViewById(R.id.cardList);
 
-        fetch(Constants.API_URL_ME  + Constants.TAG_FOLLOWERS + "?oauth_token=" + mAccessToken);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        rv.setLayoutManager(llm);
+        rv.setHasFixedSize(true);
+        imageRecords = new ArrayList<>();
+        mAdapter = new ImageItemAdapter(getActivity(),imageRecords);
+        rv.setAdapter(mAdapter);
+
+        fetch(Constants.API_URL_ME + Constants.TAG_FOLLOWERS + "?oauth_token=" + mAccessToken);
 
         return myLayout;
     }
@@ -73,8 +85,9 @@ public class FollowersFragment extends Fragment {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    List<ImageItem> imageItem = parse(response);
-                    mAdapter.swapImageRecords(imageItem);
+                    imageRecords = parse(response);
+                    mAdapter = new ImageItemAdapter(getActivity(),imageRecords);
+                    rv.setAdapter(mAdapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

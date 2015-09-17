@@ -28,5 +28,6 @@ public class Constants {
     public static final String TAG_COUNTRY ="country";
     public static final String TAG_AVATARURL = "avatar_url";
     public static final String TAG_ID = "id";
-
+    public static final String KEY_ID = "userid";
+    public static final String KEY_TOKEN ="token";
 }

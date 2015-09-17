@@ -186,10 +186,10 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         ApplicationController.getInstance().getRequestQueue().add(request);
     }
 
-    public void saveData(String userID,String token) {
+    public void saveData() {
         Bundle bundle = new Bundle();
-        bundle.putString("userid", userID);
-        bundle.putString("token", token);
+        bundle.putString(Constants.KEY_ID, getmUserID());
+        bundle.putString(Constants.KEY_TOKEN, getmAccessToken());
         followersFragment.setArguments(bundle);
     }
 
@@ -206,7 +206,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         mTvCountry.setText(country);
         profile_pic.setImageUrl(profpic, mImageLoader);
 
-        saveData(mUserID,mAccessToken);
+        saveData();
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.followers_container, followersFragment).commit();
 
 
