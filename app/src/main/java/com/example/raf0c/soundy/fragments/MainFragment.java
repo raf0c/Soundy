@@ -41,13 +41,13 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     private Button mBtn_connect;
     private DialogAuthSC dialogAuthSC;
     private OAuthAuthenticationListener mListener;
-    public TextView mTvname;
-    public TextView mTvfull_name;
-    public TextView mTvCountry;
-    public NetworkImageView profile_pic;
+    private TextView mTvname;
+    private TextView mTvfull_name;
+    private TextView mTvCountry;
+    private NetworkImageView profile_pic;
     public ImageLoader mImageLoader;
     private String mAccessToken;
-    public Boolean mUserSuccess;
+    private Boolean mUserSuccess;
     private static Context mContext;
     private String mUserID;
     private Fragment followersFragment;
