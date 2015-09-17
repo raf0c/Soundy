@@ -44,20 +44,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().putFragment(state, "mCurrentFragment", mMainFragment);
     }
 
-    @Override
-    public void onRestoreInstanceState(Bundle state) {
-        super.onRestoreInstanceState(state);
-        if (state != null) {
-            String username   = state.getString(Constants.KEY_USERNAME);
-            String fullname = state.getString(Constants.KEY_FULL_NAME);
-            String country = state.getString(Constants.KEY_COUNTRY);
-            String profpic = state.getString(Constants.KEY_PROFPIC);
-//            mTvname.setText(username);
-//            mTvfull_name.setText(fullname);
-//            mTvCountry.setText(country);
-//            profile_pic.setImageUrl(profpic, mImageLoader);
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
